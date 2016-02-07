@@ -1,4 +1,4 @@
-ccint main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 	int valid = 0;
 	char str1[8];
 	char str2[8];
