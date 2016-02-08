@@ -1,0 +1,516 @@
+﻿
+PROCESS FINDING:
+ubuntu@ubuntu-VirtualBox:~/Desktop/CS-6035-Project-1$ ps -aux | grep sort
+ubuntu    4033  0.0  1.1  29616 23664 pts/7    S+   03:02   0:00 gdb sort
+ubuntu    4039  0.0  0.0   2168  1188 pts/7    t    03:07   0:00 /home/ubuntu/Desktop/CS-6035-Project-1/sort data.txt
+ubuntu    4057  0.0  0.1   4688  2068 pts/0    S+   03:45   0:00 grep --color=auto sort
+ubuntu@ubuntu-VirtualBox:~/Desktop/CS-6035-Project-1$ cat /proc/4033/maps
+08048000-0851a000 r-xp 00000000 08:01 7124       /usr/bin/gdb
+0851a000-0851b000 r--p 004d1000 08:01 7124       /usr/bin/gdb
+0851b000-08524000 rw-p 004d2000 08:01 7124       /usr/bin/gdb
+08524000-08a38000 rw-p 00000000 00:00 0          [heap]
+b6d23000-b6d25000 r-xp 00000000 08:01 136432     /usr/lib/i386-linux-gnu/gconv/UTF-32.so
+...
+bffdf000-c0000000 rw-p 00000000 00:00 0          [stack]
+ubuntu@ubuntu-VirtualBox:~/Desktop/CS-6035-Project-1$ 
+
+
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0804872d <+0>:	push   %ebp
+   0x0804872e <+1>:	mov    %esp,%ebp
+   0x08048730 <+3>:	and    $0xfffffff0,%esp
+   0x08048733 <+6>:	sub    $0x10,%esp
+   0x08048736 <+9>:	cmpl   $0x2,0x8(%ebp)
+   0x0804873a <+13>:	je     0x804874f <main+34>
+   0x0804873c <+15>:	movl   $0x804884e,(%esp)
+   0x08048743 <+22>:	call   0x8048420 <puts@plt>
+   0x08048748 <+27>:	mov    $0xffffffff,%eax
+   0x0804874d <+32>:	jmp    0x8048776 <main+73>
+   0x0804874f <+34>:	mov    0xc(%ebp),%eax
+   0x08048752 <+37>:	add    $0x4,%eax
+   0x08048755 <+40>:	mov    (%eax),%eax
+   0x08048757 <+42>:	movl   $0x8048866,0x4(%esp)
+   0x0804875f <+50>:	mov    %eax,(%esp)
+   0x08048762 <+53>:	call   0x8048470 <fopen@plt>
+   0x08048767 <+58>:	mov    %eax,0x804a04c
+   0x0804876c <+63>:	call   0x804857d <bubble_sort>
+   0x08048771 <+68>:	mov    $0x0,%eax
+   0x08048776 <+73>:	leave  
+   0x08048777 <+74>:	ret    
+End of assembler dump.
+
+
+
+
+
+
+
+(gdb) disassemble bubble_sort
+Dump of assembler code for function bubble_sort:
+   0x0804857d <+0>:	push   %ebp
+   0x0804857e <+1>:	mov    %esp,%ebp
+   0x08048580 <+3>:	sub    $0x58,%esp
+   0x08048583 <+6>:	movl   $0x8048810,(%esp)
+   0x0804858a <+13>:	call   0x8048420 <puts@plt>
+   0x0804858f <+18>:	movl   $0x0,-0x39(%ebp)
+   0x08048596 <+25>:	movl   $0x0,-0x35(%ebp)
+   0x0804859d <+32>:	movb   $0x0,-0x31(%ebp)
+   0x080485a1 <+36>:	jmp    0x80485fe <bubble_sort+129>
+   0x080485a3 <+38>:	lea    -0x39(%ebp),%eax
+   0x080485a6 <+41>:	mov    %eax,(%esp)
+   0x080485a9 <+44>:	call   0x8048440 <strlen@plt>
+   0x080485ae <+49>:	cmp    $0x1,%eax
+   0x080485b1 <+52>:	jbe    0x80485fe <bubble_sort+129>
+   0x080485b3 <+54>:	mov    0x804a03c,%edx
+   0x080485b9 <+60>:	lea    -0x30(%ebp),%eax
+   0x080485bc <+63>:	shl    $0x2,%edx
+   0x080485bf <+66>:	add    %edx,%eax
+   0x080485c1 <+68>:	mov    %eax,0x8(%esp)
+   0x080485c5 <+72>:	movl   $0x804881d,0x4(%esp)
+   0x080485cd <+80>:	lea    -0x39(%ebp),%eax
+   0x080485d0 <+83>:	mov    %eax,(%esp)
+   0x080485d3 <+86>:	call   0x8048460 <__isoc99_sscanf@plt>
+   0x080485d8 <+91>:	mov    0x804a03c,%eax
+   0x080485dd <+96>:	mov    -0x30(%ebp,%eax,4),%eax
+   0x080485e1 <+100>:	mov    %eax,0x4(%esp)
+   0x080485e5 <+104>:	movl   $0x8048821,(%esp)
+   0x080485ec <+111>:	call   0x80483f0 <printf@plt>
+   0x080485f1 <+116>:	mov    0x804a03c,%eax
+   0x080485f6 <+121>:	add    $0x1,%eax
+   0x080485f9 <+124>:	mov    %eax,0x804a03c
+   0x080485fe <+129>:	mov    0x804a04c,%eax
+   0x08048603 <+134>:	mov    %eax,0x8(%esp)
+   0x08048607 <+138>:	movl   $0x9,0x4(%esp)
+   0x0804860f <+146>:	lea    -0x39(%ebp),%eax
+   0x08048612 <+149>:	mov    %eax,(%esp)
+   0x08048615 <+152>:	call   0x8048400 <fgets@plt>
+   0x0804861a <+157>:	test   %eax,%eax
+   0x0804861c <+159>:	jne    0x80485a3 <bubble_sort+38>
+   0x0804861e <+161>:	mov    0x804a04c,%eax
+   0x08048623 <+166>:	mov    %eax,(%esp)
+   0x08048626 <+169>:	call   0x8048410 <fclose@plt>
+   0x0804862b <+174>:	movl   $0x0,0x804a040
+   0x08048635 <+184>:	jmp    0x80486c9 <bubble_sort+332>
+   0x0804863a <+189>:	movl   $0x0,0x804a044
+   0x08048644 <+199>:	jmp    0x80486a1 <bubble_sort+292>
+   0x08048646 <+201>:	mov    0x804a044,%eax
+   0x0804864b <+206>:	mov    -0x30(%ebp,%eax,4),%edx
+   0x0804864f <+210>:	mov    0x804a044,%eax
+   0x08048654 <+215>:	add    $0x1,%eax
+   0x08048657 <+218>:	mov    -0x30(%ebp,%eax,4),%eax
+   0x0804865b <+222>:	cmp    %eax,%edx
+   0x0804865d <+224>:	jle    0x8048694 <bubble_sort+279>
+   0x0804865f <+226>:	mov    0x804a044,%eax
+   0x08048664 <+231>:	mov    -0x30(%ebp,%eax,4),%eax
+   0x08048668 <+235>:	mov    %eax,0x804a048
+   0x0804866d <+240>:	mov    0x804a044,%eax
+   0x08048672 <+245>:	mov    0x804a044,%edx
+   0x08048678 <+251>:	add    $0x1,%edx
+   0x0804867b <+254>:	mov    -0x30(%ebp,%edx,4),%edx
+   0x0804867f <+258>:	mov    %edx,-0x30(%ebp,%eax,4)
+   0x08048683 <+262>:	mov    0x804a044,%eax
+   0x08048688 <+267>:	lea    0x1(%eax),%edx
+   0x0804868b <+270>:	mov    0x804a048,%eax
+   0x08048690 <+275>:	mov    %eax,-0x30(%ebp,%edx,4)
+   0x08048694 <+279>:	mov    0x804a044,%eax
+   0x08048699 <+284>:	add    $0x1,%eax
+   0x0804869c <+287>:	mov    %eax,0x804a044
+   0x080486a1 <+292>:	mov    0x804a03c,%edx
+   0x080486a7 <+298>:	mov    0x804a040,%eax
+   0x080486ac <+303>:	sub    %eax,%edx
+   0x080486ae <+305>:	mov    %edx,%eax
+   0x080486b0 <+307>:	lea    -0x1(%eax),%edx
+   0x080486b3 <+310>:	mov    0x804a044,%eax
+   0x080486b8 <+315>:	cmp    %eax,%edx
+   0x080486ba <+317>:	jg     0x8048646 <bubble_sort+201>
+   0x080486bc <+319>:	mov    0x804a040,%eax
+   0x080486c1 <+324>:	add    $0x1,%eax
+   0x080486c4 <+327>:	mov    %eax,0x804a040
+   0x080486c9 <+332>:	mov    0x804a03c,%eax
+   0x080486ce <+337>:	lea    -0x1(%eax),%edx
+   0x080486d1 <+340>:	mov    0x804a040,%eax
+   0x080486d6 <+345>:	cmp    %eax,%edx
+   0x080486d8 <+347>:	jg     0x804863a <bubble_sort+189>
+   0x080486de <+353>:	movl   $0x8048828,(%esp)
+   0x080486e5 <+360>:	call   0x8048420 <puts@plt>
+   0x080486ea <+365>:	movl   $0x0,0x804a040
+   0x080486f4 <+375>:	jmp    0x804871c <bubble_sort+415>
+   0x080486f6 <+377>:	mov    0x804a040,%eax
+   0x080486fb <+382>:	mov    -0x30(%ebp,%eax,4),%eax
+   0x080486ff <+386>:	mov    %eax,0x4(%esp)
+   0x08048703 <+390>:	movl   $0x8048849,(%esp)
+   0x0804870a <+397>:	call   0x80483f0 <printf@plt>
+   0x0804870f <+402>:	mov    0x804a040,%eax
+   0x08048714 <+407>:	add    $0x1,%eax
+   0x08048717 <+410>:	mov    %eax,0x804a040
+   0x0804871c <+415>:	mov    0x804a040,%edx
+   0x08048722 <+421>:	mov    0x804a03c,%eax
+   0x08048727 <+426>:	cmp    %eax,%edx
+   0x08048729 <+428>:	jl     0x80486f6 <bubble_sort+377>
+   0x0804872b <+430>:	leave  
+   0x0804872c <+431>:	ret    
+End of assembler dump.
+(gdb) 
+
+
+bubble_sort () at sort.c:47
+47	  for ( c = 0 ; c < n ; c++ )
+(gdb) info registers
+eax            0x2	2
+ecx            0x0	0
+edx            0xb7fc1898	-1208215400
+ebx            0xb7fc0000	-1208221696
+esp            0xbffff030	0xbffff030
+ebp            0xbffff088	0xbffff088
+esi            0x0	0
+edi            0x0	0
+eip            0x804870f	0x804870f <bubble_sort+402>
+eflags         0x286	[ PF SF IF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51
+ESP STACK POINTER:   0xbffff030
+EIP INSTRUCTION POINTER:    0x804870f
+
+(gdb) x/10wx 0xbffff030
+0xbffff030:	0x08048849	0x00000001	0x0804b008	0xb7e79d97
+0xbffff040:	0x0804b008	0xbffff34b	0x08048866	0x33000001
+0xbffff050:	0x0000000a	0x00000000
+
+(gdb) x/500s $esp
+0xbffff030:	"I\210\004\b\001"
+0xbffff036:	""
+0xbffff037:	""
+0xbffff038:	"\b\260\004\b\227\235\347\267\b\260\004\bK\363\377\277f\210\004\b\001"
+0xbffff04e:	""
+0xbffff04f:	"3\n"
+0xbffff052:	""
+0xbffff053:	""
+0xbffff054:	""
+0xbffff055:	""
+0xbffff056:	""
+0xbffff057:	""
+0xbffff058:	"\001"
+0xbffff05a:	""
+0xbffff05b:	""
+0xbffff05c:	"\002"
+0xbffff05e:	""
+0xbffff05f:	""
+0xbffff060:	"\003"
+0xbffff062:	""
+0xbffff063:	""
+0xbffff064:	"\005"
+0xbffff066:	""
+0xbffff067:	""
+0xbffff068:	"\a"
+0xbffff06a:	""
+0xbffff06b:	""
+0xbffff06c:	"\n"
+0xbffff06e:	""
+0xbffff06f:	""
+0xbffff070:	"\v"
+0xbffff072:	""
+0xbffff073:	""
+0xbffff074:	"\f"
+---Type <return> to continue, or q <return> to quit---
+0xbffff076:	""
+0xbffff077:	""
+0xbffff078:	"\r"
+0xbffff07a:	""
+0xbffff07b:	""
+0xbffff07c:	"\240"
+0xbffff07e:	""
+0xbffff07f:	""
+0xbffff080:	"\260"
+0xbffff082:	""
+0xbffff083:	""
+0xbffff084:	<incomplete sequence \370>
+0xbffff086:	""
+0xbffff087:	""
+0xbffff088:	"\250\360\377\277q\207\004\bK\363\377\277f\210\004\b\213\207\004\b"
+0xbffff09d:	""
+0xbffff09e:	"\374\267\200\207\004\b"
+0xbffff0a5:	""
+0xbffff0a6:	""
+0xbffff0a7:	""
+0xbffff0a8:	""
+0xbffff0a9:	""
+0xbffff0aa:	""
+0xbffff0ab:	""
+0xbffff0ac:	"\203\372\342\267\002"
+0xbffff0b2:	""
+0xbffff0b3:	""
+0xbffff0b4:	"D\361\377\277P\361\377\277\352\314\376\267\002"
+0xbffff0c2:	""
+0xbffff0c3:	""
+0xbffff0c4:	"D\361\377\277\344\360\377\277$\240\004\b|\202\004\b"
+0xbffff0d5:	""
+0xbffff0d6:	<incomplete sequence \374\267>
+0xbffff0d9:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff0da:	""
+0xbffff0db:	""
+0xbffff0dc:	""
+0xbffff0dd:	""
+0xbffff0de:	""
+0xbffff0df:	""
+0xbffff0e0:	""
+0xbffff0e1:	""
+0xbffff0e2:	""
+0xbffff0e3:	""
+0xbffff0e4:	"U\355m>E\tx\004"
+0xbffff0ed:	""
+0xbffff0ee:	""
+0xbffff0ef:	""
+0xbffff0f0:	""
+0xbffff0f1:	""
+0xbffff0f2:	""
+0xbffff0f3:	""
+0xbffff0f4:	""
+0xbffff0f5:	""
+0xbffff0f6:	""
+0xbffff0f7:	""
+0xbffff0f8:	"\002"
+0xbffff0fa:	""
+0xbffff0fb:	""
+0xbffff0fc:	"\200\204\004\b"
+0xbffff101:	""
+0xbffff102:	""
+0xbffff103:	""
+0xbffff104:	""
+0xbffff105:	"%\377\267\231\371", <incomplete sequence \342\267>
+0xbffff10d:	"\360\377\267\002"
+0xbffff112:	""
+0xbffff113:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff114:	"\200\204\004\b"
+0xbffff119:	""
+0xbffff11a:	""
+0xbffff11b:	""
+0xbffff11c:	"\241\204\004\b-\207\004\b\002"
+0xbffff126:	""
+0xbffff127:	""
+0xbffff128:	"D\361\377\277\200\207\004\b\360\207\004\b\200\321\376\267<\361\377\277\034"
+0xbffff13e:	""
+0xbffff13f:	""
+0xbffff140:	"\002"
+0xbffff142:	""
+0xbffff143:	""
+0xbffff144:	"\037\363\377\277K\363\377\277"
+0xbffff14d:	""
+0xbffff14e:	""
+0xbffff14f:	""
+0xbffff150:	"T\363\377\277_\363\377\277q\363\377\277\243\363\377\277\264\363\377\277\312\363\377\277\331\363\377\277\016\364\377\277\037\364\377\277\066\364\377\277F\364\377\277Q\364\377\277c\364\377\277\227\364\377\277\333\364\377\277\n\365\377\277\026\365\377\277\067\372\377\277q\372\377\277\245\372\377\277\325\372\377\277\b\373\377\277p\373\377\277|\373\377\277\300\373\377\277\327\373\377\277\065\374\377\277D\374\377\277e\374\377\277w\374\377\277\242\374\377\277\253\374\377\277\277\374\377\277\320\374\377\277\347\374\377\277\035\375\377\277,\375\377\277I\375\377\277[\375\377\277d\375\377\277v\375\377\277\220\375\377\277\230\375\377\277\252\375\377\277\271\375\377\277\310\375\377\277\364\375\377\277\003\376\377\277\035\376\377\277Y\376\377\277"...
+0xbffff218:	"k\376\377\277\272\376\377\277\332\376\377\277\357\376\377\277\371\376\377\277\004\377\377\277#\377\377\277\066\377\377\277P\377\377\277r\377\377\277\223\377\377\277\267\377\377\277"
+0xbffff249:	""
+0xbffff24a:	""
+0xbffff24b:	""
+0xbffff24c:	" "
+0xbffff24e:	""
+0xbffff24f:	""
+0xbffff250:	"\240\314\375\267!"
+0xbffff256:	""
+0xbffff257:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff258:	""
+0xbffff259:	"\300\375\267\020"
+0xbffff25e:	""
+0xbffff25f:	""
+0xbffff260:	"\377\373\213\a\006"
+0xbffff266:	""
+0xbffff267:	""
+0xbffff268:	""
+0xbffff269:	"\020"
+0xbffff26b:	""
+0xbffff26c:	"\021"
+0xbffff26e:	""
+0xbffff26f:	""
+0xbffff270:	"d"
+0xbffff272:	""
+0xbffff273:	""
+0xbffff274:	"\003"
+0xbffff276:	""
+0xbffff277:	""
+0xbffff278:	"4\200\004\b\004"
+0xbffff27e:	""
+0xbffff27f:	""
+0xbffff280:	" "
+0xbffff282:	""
+0xbffff283:	""
+0xbffff284:	"\005"
+0xbffff286:	""
+0xbffff287:	""
+0xbffff288:	"\t"
+0xbffff28a:	""
+0xbffff28b:	""
+0xbffff28c:	"\a"
+0xbffff28e:	""
+0xbffff28f:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff290:	""
+0xbffff291:	"\340\375\267\b"
+0xbffff296:	""
+0xbffff297:	""
+0xbffff298:	""
+0xbffff299:	""
+0xbffff29a:	""
+0xbffff29b:	""
+0xbffff29c:	"\t"
+0xbffff29e:	""
+0xbffff29f:	""
+0xbffff2a0:	"\200\204\004\b\v"
+0xbffff2a6:	""
+0xbffff2a7:	""
+0xbffff2a8:	"\350\003"
+0xbffff2ab:	""
+0xbffff2ac:	"\f"
+0xbffff2ae:	""
+0xbffff2af:	""
+0xbffff2b0:	"\350\003"
+0xbffff2b3:	""
+0xbffff2b4:	"\r"
+0xbffff2b6:	""
+0xbffff2b7:	""
+0xbffff2b8:	"\350\003"
+0xbffff2bb:	""
+0xbffff2bc:	"\016"
+0xbffff2be:	""
+0xbffff2bf:	""
+0xbffff2c0:	"\350\003"
+0xbffff2c3:	""
+0xbffff2c4:	"\027"
+0xbffff2c6:	""
+0xbffff2c7:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff2c8:	""
+0xbffff2c9:	""
+0xbffff2ca:	""
+0xbffff2cb:	""
+0xbffff2cc:	"\031"
+0xbffff2ce:	""
+0xbffff2cf:	""
+0xbffff2d0:	"\373\362\377\277\037"
+0xbffff2d6:	""
+0xbffff2d7:	""
+0xbffff2d8:	"\320\377\377\277\017"
+0xbffff2de:	""
+0xbffff2df:	""
+0xbffff2e0:	"\v\363\377\277"
+0xbffff2e5:	""
+0xbffff2e6:	""
+0xbffff2e7:	""
+0xbffff2e8:	""
+0xbffff2e9:	""
+0xbffff2ea:	""
+0xbffff2eb:	""
+0xbffff2ec:	""
+0xbffff2ed:	""
+0xbffff2ee:	""
+0xbffff2ef:	""
+0xbffff2f0:	""
+0xbffff2f1:	""
+0xbffff2f2:	""
+0xbffff2f3:	""
+0xbffff2f4:	""
+0xbffff2f5:	""
+0xbffff2f6:	""
+0xbffff2f7:	""
+0xbffff2f8:	""
+---Type <return> to continue, or q <return> to quit---
+0xbffff2f9:	""
+0xbffff2fa:	""
+0xbffff2fb:	")9\016\214F\306`\025\370Ů\016\003\063l\243i686"
+0xbffff310:	""
+0xbffff311:	""
+0xbffff312:	""
+0xbffff313:	""
+0xbffff314:	""
+0xbffff315:	""
+0xbffff316:	""
+0xbffff317:	""
+0xbffff318:	""
+0xbffff319:	""
+0xbffff31a:	""
+0xbffff31b:	""
+0xbffff31c:	""
+0xbffff31d:	""
+0xbffff31e:	""
+0xbffff31f:	"/home/ubuntu/Desktop/CS-6035-Project-1/sort"
+0xbffff34b:	"data.txt"
+0xbffff354:	"XDG_VTNR=7"
+0xbffff35f:	"XDG_SESSION_ID=c1"
+0xbffff371:	"XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/ubuntu"
+0xbffff3a3:	"SELINUX_INIT=YES"
+0xbffff3b4:	"CLUTTER_IM_MODULE=xim"
+0xbffff3ca:	"SESSION=ubuntu"
+0xbffff3d9:	"GPG_AGENT_INFO=/run/user/1000/keyring-xB1PSE/gpg:0:1"
+0xbffff40e:	"VTE_VERSION=3409"
+0xbffff41f:	"XDG_MENU_PREFIX=gnome-"
+0xbffff436:	"SHELL=/bin/bash"
+0xbffff446:	"TERM=xterm"
+0xbffff451:	"WINDOWID=56623115"
+0xbffff463:	"GNOME_KEYRING_CONTROL=/run/user/1000/keyring-xB1PSE"
+0xbffff497:	"UPSTART_SESSION=unix:abstract=/com/ubuntu/upstart-session/1000/1223"
+0xbffff4db:	"GTK_MODULES=overlay-scrollbar:unity-gtk-module"
+0xbffff50a:	"USER=ubuntu"
+...
+0xbffffa37:	"XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0"
+0xbffffa71:	"XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0"
+0xbffffaa5:	"SSH_AUTH_SOCK=/run/user/1000/keyring-xB1PSE/ssh"
+0xbffffad5:	"DEFAULTS_PATH=/usr/share/gconf/ubuntu.default.path"
+0xbffffb08:	"SESSION_MANAGER=local/ubuntu-VirtualBox:@/tmp/.ICE-unix/1389,unix/ubuntu-VirtualBox:/tmp/.ICE-unix/1389"
+0xbffffb70:	"COLUMNS=144"
+0xbffffb7c:	"XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/usr/share/upstart/xdg:/etc/xdg"
+0xbffffbc0:	"DESKTOP_SESSION=ubuntu"
+0xbffffbd7:	"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+0xbffffc35:	"_=/usr/bin/gdb"
+0xbffffc44:	"QT_QPA_PLATFORMTHEME=appmenu-qt5"
+0xbffffc65:	"QT_IM_MODULE=ibus"
+0xbffffc77:	"PWD=/home/ubuntu/Desktop/CS-6035-Project-1"
+0xbffffca2:	"JOB=dbus"
+0xbffffcab:	"XMODIFIERS=@im=ibus"
+0xbffffcbf:	"LANG=en_US.UTF-8"
+0xbffffcd0:	"GNOME_KEYRING_PID=1343"
+0xbffffce7:	"MANDATORY_PATH=/usr/share/gconf/ubuntu.mandatory.path"
+0xbffffd1d:	"GDM_LANG=en_US"
+0xbffffd2c:	"COMPIZ_CONFIG_PROFILE=ubuntu"
+0xbffffd49:	"IM_CONFIG_PHASE=1"
+0xbffffd5b:	"LINES=35"
+0xbffffd64:	"GDMSESSION=ubuntu"
+0xbffffd76:	"SESSIONTYPE=gnome-session"
+0xbffffd90:	"SHLVL=1"
+0xbffffd98:	"HOME=/home/ubuntu"
+0xbffffdaa:	"XDG_SEAT=seat0"
+0xbffffdb9:	"LANGUAGE=en_US"
+0xbffffdc8:	"GNOME_DESKTOP_SESSION_ID=this-is-deprecated"
+0xbffffdf4:	"LOGNAME=ubuntu"
+0xbffffe03:	"COMPIZ_BIN_PATH=/usr/bin/"
+0xbffffe1d:	"DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-FDHxsxTs2c"
+0xbffffe59:	"QT4_IM_MODULE=xim"
+0xbffffe6b:	"XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/"
+0xbffffeba:	"LESSOPEN=| /usr/bin/lesspipe %s"
+0xbffffeda:	"TEXTDOMAIN=im-config"
+0xbffffeef:	"INSTANCE="
+0xbffffef9:	"DISPLAY=:0"
+0xbfffff04:	"XDG_RUNTIME_DIR=/run/user/1000"
+0xbfffff23:	"GTK_IM_MODULE=ibus"
+0xbfffff36:	"XDG_CURRENT_DESKTOP=Unity"
+0xbfffff50:	"LESSCLOSE=/usr/bin/lesspipe %s %s"
+0xbfffff72:	"TEXTDOMAINDIR=/usr/share/locale/"
+0xbfffff93:	"XAUTHORITY=/home/ubuntu/.Xauthority"
+0xbfffffb7:	"COLORTERM=gnome-terminal"
+0xbfffffd0:	"/home/ubuntu/Desktop/CS-6035-Project-1/sort"
+0xbffffffc:	""
+0xbffffffd:	""
+0xbffffffe:	""
+0xbfffffff:	""
+...
+0xc0000000:	<error: Cannot access memory at address 0xc0000000>
+(gdb) 
+
+0xbffff436:	"SHELL=/bin/bash"
+
